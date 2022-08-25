@@ -4,6 +4,7 @@ import cv2
 from  PIL import Image, ImageEnhance
 import os
 import pathlib
+# from streamlit_drawable_canvas import st_canvas
 
 
 
@@ -87,6 +88,18 @@ with c2:
     st.markdown("* BL vs Our SSIM, Bl vs SOTA SSIM") 
     st.button("View the generated map in 3d surface model")
     st.button("Get elevation b/w two points")
+
+# Page 3
+c1,c2 = st.columns([7,3])
+
+with c1:
+    # geometry_list = st.geom_canvas(img, box = True, polygon = True, point = True, radius = True)
+    image = os.path.join(os.getcwd(),'images','Our_Result.png')
+    # obj_list = st.canvas_select(image, box = True, polygon = True)
+
+with c2:
+    st.button("Generated image")
+    st.button("save this view")
 
 
 
