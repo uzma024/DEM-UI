@@ -6,28 +6,51 @@ from PIL import Image
 import numpy as np
 import extra_streamlit_components as stx
 import os
+import rasterio as rio
+# import torch
+# import torch.nn as nn
+# import torch.functional as F
+# import os
 
+# os.environ['KMP_DUPLICATE_LIB_OK']='True'
+# def model(im):
+#     tensor = torch.tensor(im)
+#     upsampled = F.interpolate(im, scale_factor=3, mode='bilinear')
+#     return upsampled.numpy()
 
+def normalize(im):
+    MIN_H = -500.0
+    MAX_H = 10000.0
+    return (im - MIN_H)/(MAX_H-MIN_H)
 
 def main_page():
-
     st.title('Image Super Resolution')
 
     uploaded_file = st.sidebar.file_uploader(label="", type=".tif")
 
     st.subheader("")
-    st.subheader("Input LR DEM")
 
-    st.write(type(uploaded_file))
-    st.write(uploaded_file)
+    # st.write(type(uploaded_file))
+    # st.write(uploaded_file)
 
     if uploaded_file is not None:
-
-        st.write("filename:", uploaded_file.name)
-        image = Image.open(uploaded_file)
+        # st.write("filename:", uploaded_file.name)
+        st.subheader("Input LR DEM")
+        image = normalize(rio.open(uploaded_file).read(1).astype('float'))
         image = np.array(image)
+        # out=model(image)
+        
         print(image.shape)
         st.image(image=image)
+        st.subheader("Output HR DEM")
+        # --------------DO SOME COMPUTATION --------------
+        print(image.shape)
+        st.image(image=image)
+        # c1,c2=st.columns(2)
+        # with c1:
+        #     st.image(image=image)
+        # with c2:
+        #     st.image(image=image)
 
 
 def page2():
@@ -71,7 +94,6 @@ def page2():
         st.markdown("* BL vs Our SSIM, Bl vs SOTA SSIM") 
         st.button("View the generated map in 3d surface model")
         st.button("Get elevation b/w two points")
-
 
 def page3():
     c1,c2 = st.columns([7,3])
