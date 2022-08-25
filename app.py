@@ -2,11 +2,16 @@ import streamlit as st
 import numpy as np
 import cv2
 from  PIL import Image, ImageEnhance
+import os
+import pathlib
+
 
 
 
 st.title("Super Resolution Digital Elevation Models from low-resolution DEMs")
 
+# directory = pathlib.Path(__file__).parent.resolve()
+# print(directory)
 
 col1, col2 = st.columns(2)
 
@@ -20,7 +25,7 @@ with col1:
     # im = im.convert("L")
     # im.save("Images/gen.jpeg")
 
-    uploaded_file = st.file_uploader(label="", type=[".tif", ".asc"])
+    uploaded_file = st.file_uploader(label="", type=[".png",".tif", ".asc"])
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
         st.image(image, use_column_width=True)
@@ -41,31 +46,33 @@ with col2:
 
 # st.markdown("</br>")
 
+
 # Page 2
 c1,c2,c3,c4=st.columns(4)
 with c1:
-    image = Image.open("/Users/uzmafirozkhan/Desktop/Uzma2022/vs/Streamlit/SIH/images/LR_IMAGE.png")
+    image = os.path.join(os.getcwd(),'images','LR_IMAGE.png')
+    # image = Image.open(directory+"")
     if image is not None:
         st.image(image, use_column_width=True)
         st.text("LR IMAGE")
     else:
         st.text("No file uploaded.")
 with c2:
-    image = Image.open("/Users/uzmafirozkhan/Desktop/Uzma2022/vs/Streamlit/SIH/images/Bi_Linear.png")
+    image = os.path.join(os.getcwd(),'images','Bi_Linear.png')
     if image is not None:
         st.image(image, use_column_width=True)
         st.text("Bi Linear")
     else:
         st.text("No file uploaded.")
 with c3:
-    image = Image.open("/Users/uzmafirozkhan/Desktop/Uzma2022/vs/Streamlit/SIH/images/Our_Result.png")
+    image = os.path.join(os.getcwd(),'images','Our_Result.png')
     if image is not None:
         st.image(image, use_column_width=True)
         st.text("Our Result")
     else:
         st.text("No file uploaded.")
 with c4:
-    image = Image.open("/Users/uzmafirozkhan/Desktop/Uzma2022/vs/Streamlit/SIH/images/SOTA_Model.png")
+    image = os.path.join(os.getcwd(),'images','SOTA_Model.png')
     if image is not None:
         st.image(image, use_column_width=True)
         st.text("SOTA Model")
